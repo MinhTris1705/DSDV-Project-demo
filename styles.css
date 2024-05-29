@@ -7,7 +7,7 @@ body {
 
 /* Hero section styling */
 .hero {
-    background-image: url('https://static.vecteezy.com/system/resources/previews/025/466/187/non_2x/world-map-abstract-map-of-planet-made-with-binary-code-global-network-connection-futuristic-background-with-map-of-planet-earth-digital-binary-data-and-streaming-digital-code-illustration-vector.jpg');
+    background-image: url('https://images.newscientist.com/wp-content/uploads/2022/11/09120537/SEI_132778545.jpg');
     height: 100vh;
     display: flex;
     flex-direction: column;
@@ -27,8 +27,9 @@ body {
     padding: 10px 20px;
     font-size: 1.2em;
     cursor: pointer;
-    color: rgb(194, 9, 245); /* Text button color */
-    background-color: #ffffff;
+    color: rgb(255, 255, 255); /* Text button color */
+    background-color: #000000;
+    font-weight: bold;
 }
 
 /* Content styling */
