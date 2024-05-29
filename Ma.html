@@ -47,8 +47,12 @@
             console.log(error);
         } else {
             console.log(data);
-
-
+            // Group the data: group country name
+            var sumstat = d3.nest()
+                .key(function(d) {
+                    return d.Entity;
+                })
+                .entries(data);
 
             // Add X axis 
             var x = d3.scaleLinear()
@@ -71,5 +75,20 @@
             yAxis = svg.append("g")
                 .call(d3.axisLeft(y));
             }
+
+            // Add X axis label:
+            svg.append("text")
+                .attr("text-anchor", "end")
+                .attr("x", width / 2 + 35)
+                .attr("y", height + 45)
+                .text("Year");
+
+            // Y axis label:
+            svg.append("text")
+                .attr("text-anchor", "end")
+                .attr("transform", "rotate(-90)")
+                .attr("y", -margin.left + 35)
+                .attr("x", -margin.top - height / 2 + 95)
+                .text("Age")
     })
 </script>
