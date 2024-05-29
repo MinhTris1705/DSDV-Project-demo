@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Science and Data Visualization</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="hero">
+    <h1>AGING POPULATION PROJECT </h1>
+    <button id="get-started-btn">Get Started</button>
+</div>
+
+<div class="content">
+    <div class="navbar">
+        <button class="navbar-btn" id="navbar-btn">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+        </button>
+        <div class="navbar-content">
+            <a href="#section1">Background</a>
+            <a href="#section2">Median Age</a>
+            <a href="#section3">Fertility Rate</a>
+            <a href="#section4">Age Structure</a>
+            <a href="#section5">Conclusion</a>
+        </div>
+    </div>
+
+    <div class="section-folder">
+        <section id="section1">
+            <h2>Background</h2>
+            <p>Information about the background.</p>
+        </section>
+        <section id="section2">
+            <h2>Median Age</h2>
+            <div class="section-content">
+                <div class="text">Median Age Information.</div>
+                <div class="graph" id="median-age-graph"></div>
+            </div>
+        </section>
+        <section id="section3">
+            <h2>Fertility Rate</h2>
+            <div class="section-content">
+                <div class="text">Fertility Rate Information.</div>
+                <div class="graph" id="fertility-rate-graph"></div>
+            </div>
+        </section>
+        <section id="section4">
+            <h2>Age Structure</h2>
+            <div class="section-content">
+                <div class="text">Age Structure Information.</div>
+                <div class="graph" id="age-structure-graph"></div>
+            </div>
+        </section>
+        <section id="section5">
+            <h2>Conclusion</h2>
+            <p>Conclusion information.</p>
+            <button id="exit-btn">Exit</button>
+        </section>
+    </div>
+</div>
+
+<script src="script.js"></script>
+<script src="d3_visualizations.js"></script>
+</body>
+</html>
