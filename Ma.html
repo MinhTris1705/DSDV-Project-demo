@@ -14,7 +14,7 @@
     // Set the dimensions and margins of the graph
     var margin = {
             top: 40,
-            right: 100,
+            right: 120,
             bottom:60,
             left: 80
         },
@@ -68,7 +68,7 @@
 
             // Add Y axis
             var y = d3.scaleLinear()
-                .domain([20, d3.max(data, function(d) {
+                .domain([15, d3.max(data, function(d) {
                     return d.Median_age;
                 })])
                 .range([height, 0]);
@@ -90,5 +90,37 @@
                 .attr("y", -margin.left + 35)
                 .attr("x", -margin.top - height / 2 + 95)
                 .text("Age")
+
+            // Create colors for lines
+            var res = sumstat.map(function(d) {
+                return d.key
+            }) // list of country names in color
+            var color = d3.scaleOrdinal()
+            .domain(res)
+            .range(['#e6194b','#3cb44b', '#0082c8', '#f58231','#ffe119','#911eb4','#46f0f0','#f032e6','#d2f53c','#fabebe','#008080'])
+
+            // Draw the line
+            svg.selectAll(".line")
+            .data(sumstat)
+            .enter()
+            .append("path")
+            .attr("fill", "none")
+            .attr("class", function(d) {
+                return "line " + d.key
+            })
+            .attr("stroke", function(d) {
+                return color(d.key)
+            })
+            .attr("stroke-width", 3)
+            .attr("d", function(d) {
+                return d3.line()
+                    .x(function(d) {
+                        return x(d.Year);
+                    })
+                    .y(function(d) {
+                        return y(+d.Median_age);
+                    })
+                    (d.values)
+            })
     })
 </script>
