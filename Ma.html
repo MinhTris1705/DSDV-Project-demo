@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Project median age</title>
+    <body>
+    </body>
+</head>	
+</html>
+
+<meta charset="utf-8">
+<script src="https://d3js.org/d3.v4.js"></script>
+<div id="my_dataviz"></div>
+<script>
+    // Set the dimensions and margins of the graph
+    var margin = {
+            top: 40,
+            right: 100,
+            bottom:60,
+            left: 80
+        },
+        width = 800 - margin.right,
+        height = 450;
+
+
+    // Append the svg object to the body of the page
+    var svg = d3.select("#my_dataviz")
+        .append("svg")
+        .attr("width", width+ margin.left + margin.right )
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform",
+            "translate(" + margin.left + "," + margin.top+ ")");
+
+
+    var rowConverter= function(d){
+		return{
+				Entity:d.Entity,
+				Year:parseInt(d.Year),
+				Median_age: parseFloat(d.Median_age)
+				}
+    }
+
+
+    //Read the data
+    d3.csv("Median_age.csv", rowConverter, function(error, data) {
+        if (error) {
+            console.log(error);
+        } else {
+            console.log(data);
+
+
+
+            // Add X axis 
+            var x = d3.scaleLinear()
+                .domain(d3.extent(data, function(d) { return d.Year; }))
+                .range([0, width]);
+            var xAxisGenerator = d3.axisBottom(x)
+                .tickFormat(d3.format("d"))
+                .ticks(5)
+            
+            xAxis = svg.append("g")
+                .attr("transform", "translate(0," + height + ")")
+                .call(xAxisGenerator);
+
+            // Add Y axis
+            var y = d3.scaleLinear()
+                .domain([20, d3.max(data, function(d) {
+                    return d.Median_age;
+                })])
+                .range([height, 0]);
+            yAxis = svg.append("g")
+                .call(d3.axisLeft(y));
+            }
+    })
+</script>
