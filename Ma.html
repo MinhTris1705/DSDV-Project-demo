@@ -122,5 +122,45 @@
                     })
                     (d.values)
             })
+
+            //Highlight the country that is hovered
+            var highlight= function(d){
+                d3.selectAll(".line")
+                  .transition()
+                  .duration(500)
+                  .attr("opacity",0.15)
+                 
+                d3.selectAll("." + d.key)
+                  .transition()
+                  .duration(1000)
+                  .attr("opacity",1)
+                  .attr("stroke-width",2.5) 
+            }
+
+            //Do not highlight
+            var doNotHighlight= function(){
+                d3.selectAll(".line")
+                  .transition()
+                  .duration(500)
+                  .attr("opacity",1)
+                  .attr("stroke-width",2.5)
+            }
+
+            //Add 1 dot in the legend for each country
+            var size = 20
+            svg.selectAll("mydots")
+               .data(sumstat)
+               .enter()
+               .append("circle")
+               .attr("cx",700)
+               .attr("cy",function(d,i){
+                    return 10+ i* (size +5) 
+               }) 
+               .attr("r",8)
+               .attr("fill", function(d){
+                    return color(d.key)
+               })
+               .on("mouseover", highlight)
+               .on("mouseleave", doNotHighlight)
     })
 </script>
