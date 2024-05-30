@@ -160,7 +160,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 .style("opacity", "0");
 
             mousePerLine.append("text")
-                .attr("transform", "translate(10,5)");
+                .attr("transform", "translate(10,5)")
+                .style("font-size", "12px");
 
             mouseG.append('svg:rect')
                 .attr('width', width)
