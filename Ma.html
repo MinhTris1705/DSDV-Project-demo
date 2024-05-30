@@ -4,6 +4,12 @@
     <title>Project median age</title>
     <body>
     </body>
+    <style>
+        .safeLevel{
+            stroke: black;
+            stroke-dasharray:2,4;
+        }
+    </style>
 </head>	
 </html>
 
@@ -92,11 +98,11 @@
                 .text("Age")
 
             // Create colors for lines
-            var res = sumstat.map(function(d) {
+            var rest = sumstat.map(function(d) {
                 return d.key
             }) // list of country names in color
             var color = d3.scaleOrdinal()
-            .domain(res)
+            .domain(rest)
             .range(['#e6194b','#3cb44b', '#0082c8', '#f58231','#ffe119','#911eb4','#46f0f0','#f032e6','#d2f53c','#fabebe','#008080'])
 
             // Draw the line
@@ -162,5 +168,35 @@
                })
                .on("mouseover", highlight)
                .on("mouseleave", doNotHighlight)
+
+            //Add labels beside legend dots
+            svg.selectAll("mylabels")
+               .data(sumstat)
+               .enter()
+               .append("text")
+               .attr("x",700+ size*.85)
+               .attr("y", function(d,i){
+                return i*(size+5)+(size/2)
+               })
+               .style("fill",function(d) {
+                return color(d.key)
+               })
+               .text(function(d){
+                return d.key
+               })
+               .attr("text-anchor","left")
+               .style("alignment-baseline","middle")
+               .on("mouseover",function(d){
+                return highlight(d);
+               })
+               .on("mouseleave",doNotHighlight)
+
+               //Draw world's average median age
+               svg.append("line")
+                  .attr("class","safeLevel")
+                  .attr("x1",0)
+                  .attr("x2",width)
+                  .attr("y1",y(29.5))
+                  .attr("y2",y(29.5));
     })
 </script>
