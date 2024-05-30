@@ -141,3 +141,16 @@ body {
     color: white;
     border: none;
 }
+
+/*Style 29.5*/
+.safeLevel {
+    stroke: blue;
+    stroke-dasharray: 3, 5;
+}
+
+.avgLabel {
+    font-family: Helvetica, sans-serif;
+    font-size: 14px;
+    font-weight:bold;
+    fill: blue
+}

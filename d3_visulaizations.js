@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
             var rest = sumstat.map(function(d) { return d.key; });
             var color = d3.scaleOrdinal()
                 .domain(rest)
-                .range(['#e6194b', '#3cb44b', '#0082c8', '#f58231', '#ffe119', '#911eb4', '#46f0f0', '#f032e6', '#d2f53c', '#fabebe', '#008080']);
+                .range(['#e6194b', '#3cb44b', '#0082c8', '#f58231', '#ffe119', '#911eb4', '#46f0f0', '#f032e6', 'rgb(123,120,164)', '#fabebe', '#008080']);
 
             svg.selectAll(".line")
                 .data(sumstat)
@@ -74,7 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 .attr("fill", "none")
                 .attr("class", function(d) { return "line " + d.key; })
                 .attr("stroke", function(d) { return color(d.key); })
-                .attr("stroke-width", 3)
+                .attr("stroke-width", 1.5)
                 .attr("d", function(d) {
                     return d3.line()
                         .x(function(d) { return x(d.Year); })
@@ -85,14 +85,14 @@ document.addEventListener('DOMContentLoaded', () => {
             var highlight = function(d) {
                 d3.selectAll(".line")
                     .transition()
-                    .duration(500)
-                    .attr("opacity", 0.15);
+                    .duration(300)
+                    .attr("opacity", 0.05);
 
                 d3.selectAll("." + d.key)
                     .transition()
-                    .duration(1000)
+                    .duration(200)
                     .attr("opacity", 1)
-                    .attr("stroke-width", 2.5);
+                    .attr("stroke-width", 5.5);
             };
 
             var doNotHighlight = function() {
@@ -100,7 +100,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     .transition()
                     .duration(500)
                     .attr("opacity", 1)
-                    .attr("stroke-width", 2.5);
+                    .attr("stroke-width", 1.5);
             };
 
             var size = 20;
@@ -193,7 +193,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             var idx = bisect(d.values, xYear);
 
                             d3.select(this).select("text")
-                                .text(y.invert(y(d.values[idx].Median_age)).toFixed(0));
+                                .text(y.invert(y(d.values[idx].Median_age)).toFixed(1));
 
                             d3.select(".mouse-line")
                                 .attr("d", function() {
