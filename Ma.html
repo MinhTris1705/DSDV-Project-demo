@@ -6,8 +6,15 @@
     </body>
     <style>
         .safeLevel{
-            stroke: black;
-            stroke-dasharray:2,4;
+            stroke: blue;
+            stroke-dasharray:3,5;
+        }
+
+        .avgLabel{
+            font-family:Arial, Helvetica, sans-serif;
+            font-size:14px;
+            font-weight:bold;
+            fill:blue
         }
     </style>
 </head>	
@@ -25,7 +32,7 @@
             left: 80
         },
         width = 800 - margin.right,
-        height = 450;
+        height = 600;
 
 
     // Append the svg object to the body of the page
@@ -53,6 +60,11 @@
             console.log(error);
         } else {
             console.log(data);
+
+            var bisectYear= d3.bisector(function(d){
+                return d.Year;
+            }).left;
+
             // Group the data: group country name
             var sumstat = d3.nest()
                 .key(function(d) {
@@ -198,5 +210,85 @@
                   .attr("x2",width)
                   .attr("y1",y(29.5))
                   .attr("y2",y(29.5));
+
+                //Label world's avg med age
+                svg.append("text")
+                   .attr("class","avgLabel")
+                   .attr("x",-30)
+                   .attr("y",y(29.5)+5)
+                   .text("29.5");
+
+                // Cursors
+            var mouseG = svg.append("g")
+                .attr("class", "mouse-over-effects");
+
+            var lines = document.getElementsByClassName('line');
+
+            var mousePerLine = mouseG.selectAll('.mouse-per-line')
+                .data(sumstat)
+                .enter()
+                .append("g")
+                .attr("class", "mouse-per-line");
+
+            mousePerLine.append("circle")
+                .attr("r", 5)
+                .style("stroke", function(d) {
+                    return color(d.key);
+                })
+                .style("fill", function(d){
+                    return color(d.key);
+                })
+                .style("stroke-width", 2)
+                .style("opacity", "0");
+
+            mousePerLine.append("text")
+                .attr("transform", "translate(10,5)");
+
+            mouseG.append('svg:rect') 
+                .attr('width', width) 
+                .attr('height', height)
+                .attr('fill', 'none')
+                .attr('pointer-events', 'all')
+                .on('mouseout', function() { 
+                    d3.select(".mouse-line")
+                        .style("opacity", "0");
+                    d3.selectAll(".mouse-per-line circle")
+                        .style("opacity", "0");
+                    d3.selectAll(".mouse-per-line text")
+                        .style("opacity", "0");
+                })
+                .on('mouseover', function() { 
+                    d3.select(".mouse-line")
+                        .style("opacity", "1");
+                    d3.selectAll(".mouse-per-line circle")
+                        .style("opacity", "1");
+                    d3.selectAll(".mouse-per-line text")
+                        .style("opacity", "1");
+                })
+                .on('mousemove', function() { 
+                    var mouse = d3.mouse(this);
+
+                    d3.selectAll(".mouse-per-line")
+                        .attr("transform", function(d, i) {
+
+                            var xYear = x.invert(mouse[0]),
+                                bisect = d3.bisector(function(d) {
+                                    return d.Year;
+                                }).left;
+                            idx = bisect(d.values, xYear);
+
+                            d3.select(this).select("text")
+                                .text(y.invert(y(d.values[idx].Median_age)).toFixed(0));
+
+                            d3.select(".mouse-line")
+                                .attr("d", function() {
+                                    var data = "M" + x(d.values[idx].Year) + "," + height;
+                                    data += " " + x(d.values[idx].Year) + "," + 0;
+                                    return data;
+                                });
+                            return "translate(" + x(d.values[idx].Year) + "," + y(d.values[idx].Median_age) + ")";
+                        });
+                });
+
     })
 </script>
