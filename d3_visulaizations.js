@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             var svg = d3.select("#median-age-graph")
                 .append("svg")
-                .attr("width", width + margin.left + margin.right)
+                .attr("width", width + margin.left + margin.right+100)
                 .attr("height", height + margin.top + margin.bottom)
                 .append("g")
                 .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
             var rest = sumstat.map(function(d) { return d.key; });
             var color = d3.scaleOrdinal()
                 .domain(rest)
-                .range(['#e6194b', '#3cb44b', '#0082c8', '#f58231', '#ffe119', '#911eb4', '#46f0f0', '#f032e6', 'rgb(123,120,164)', '#fabebe', '#008080']);
+                .range(['#e6194b', '#3cb44b', '#0082c8', '#f58231', '#ccaa00', '#911eb4', '#46f0f0', '#f032e6', 'rgb(123,120,164)', '#fabebe', '#008080']);
 
             svg.selectAll(".line")
                 .data(sumstat)
@@ -108,7 +108,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 .data(sumstat)
                 .enter()
                 .append("circle")
-                .attr("cx", 700)
+                .attr("cx", 750)
                 .attr("cy", function(d, i) { return 10 + i * (size + 5); })
                 .attr("r", 8)
                 .attr("fill", function(d) { return color(d.key); })
@@ -119,7 +119,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 .data(sumstat)
                 .enter()
                 .append("text")
-                .attr("x", 700 + size * 0.85)
+                .attr("x", 750 + size * 0.85)
                 .attr("y", function(d, i) { return i * (size + 5) + (size / 2); })
                 .style("fill", function(d) { return color(d.key); })
                 .text(function(d) { return d.key; })
