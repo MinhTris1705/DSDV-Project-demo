@@ -3,6 +3,7 @@
 <head>
     <title>Bar Chart for Year 2021 with D3.js</title>
     <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
     <style>
       .tooltip {
           position: absolute;
@@ -45,7 +46,7 @@
             .attr("class", "tooltip")
             .style("opacity", 0);
 
-        d3.csv("https://raw.githubusercontent.com/MinhTris1705/DSDV-Project-demo/main/Fertility_rate.csv").then(function(data) {
+        d3.csv("https://raw.githubusercontent.com/MinhTris1705/DSDV-Project-demo/main/datasets/Fertility_rate.csv").then(function(data) {
             const initialYear = "2017";
             const filteredData = data.filter(d => d.Year === initialYear);
             createChart(filteredData);
@@ -58,7 +59,7 @@
           });
 
         function updateChart(selectedYear) {
-          d3.csv("https://raw.githubusercontent.com/MinhTris1705/DSDV-Project-demo/main/Fertility_rate.csv")
+          d3.csv("https://raw.githubusercontent.com/MinhTris1705/DSDV-Project-demo/main/datasets/Fertility_rate.csv")
           .then(function(data) {
               const filteredData = data.filter(d => d.Year === selectedYear);
               // updateScales(filteredData);

@@ -6,6 +6,7 @@
     <title>Data Science and Data Visualization</title>
     <link rel="stylesheet" href="styles.css">
     <script src="https://d3js.org/d3.v4.min.js"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
 </head>
 <body>
 <div class="hero">
@@ -36,21 +37,28 @@
         </section>
         <section id="section2">
             <h2>Median Age</h2>
-            <div class="section-content">
+            <div class="section2-content">
                 <div class="text">Median Age Information.</div>
                 <div class="graph" id="median-age-graph"></div>
             </div>
         </section>
         <section id="section3">
             <h2>Fertility Rate</h2>
-            <div class="section-content">
-                <div class="text">Fertility Rate Information.</div>
+            <div class="section3-content">
                 <div class="graph" id="fertility-rate-graph"></div>
+                <div class="text">Fertility Rate Information.</div>
+                <select id="year-dropdown">
+                    <option value="2017" selected>2017</option>
+                    <option value="2018">2018</option>
+                    <option value="2019">2019</option>
+                    <option value="2020">2020</option>
+                    <option value="2021">2021</option>
+                </select>
             </div>
         </section>
         <section id="section4">
             <h2>Age Structure</h2>
-            <div class="section-content">
+            <div class="section4-content">
                 <div class="text">Age Structure Information.</div>
                 <div class="graph" id="age-structure-graph"></div>
             </div>
@@ -65,5 +73,6 @@
 
 <script src="script.js"></script>
 <script src="Median_Age.js"></script>
+<script src="Fertility_Rate.js"></script>
 </body>
 </html>

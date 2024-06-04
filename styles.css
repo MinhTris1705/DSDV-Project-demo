@@ -111,23 +111,53 @@ body {
     padding-bottom: 10px;
 }
 
-/* Section content styling */
-.section-content {
+/* Section 2 content styling */
+.section2-content {
     display: flex;
     justify-content: space-between;
 }
 
-/* Text manage */
-.section-content .text {
+.section2-content .text {
     flex: 2; /* 2/5 of the section */
     margin-right: 20px;
 }
 
-/* Graph manage */
-.section-content .graph {
+.section2-content .graph {
     flex: 3; /* 3/5 of the section */
     min-height: 400px;
-/*    border-left: 1px solid #333; */
+    padding-left: 20px;
+}
+
+/* Section 3 content styling */
+.section3-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.section3-content .graph {
+    order: 1;
+    margin-bottom: 20px;
+    height: 600px; 
+}
+
+.section3-content .text {
+    order: 2;
+}
+
+/* Section 4 content styling */
+.section4-content {
+    display: flex;
+    justify-content: space-between;
+}
+
+.section4-content .text {
+    flex: 2;
+    margin-right: 20px;
+}
+
+.section4-content .graph {
+    flex: 3;
+    min-height: 400px;
     padding-left: 20px;
 }
 
@@ -151,6 +181,19 @@ body {
 .avgLabel {
     font-family: Helvetica, sans-serif;
     font-size: 14px;
-    font-weight:bold;
-    fill: blue
+    font-weight: bold;
+    fill: blue;
+}
+
+.tooltip {
+    position: absolute;
+    text-align: center;
+    width: 120px;
+    height: auto;
+    padding: 5px;
+    font: 12px sans-serif;
+    background: lightsteelblue;
+    border: 0px;
+    border-radius: 8px;
+    pointer-events: none;
 }
