@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     // Load and visualize the Median Age data
-    fetch('https://raw.githubusercontent.com/MinhTris1705/DSDV-Project-demo/main/Median_age.csv')
+    fetch('https://raw.githubusercontent.com/MinhTris1705/DSDV-Project-demo/main/datasets/Median_age.csv')
         .then(response => response.text())
         .then(data => {
             var margin = { top: 40, right: 120, bottom: 60, left: 80 },
