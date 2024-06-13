@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fertility Rate</title>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        body {
+            font-family: "Lato", sans-serif;
+        }
+        .tooltip {
+            position: absolute;
+            text-align: center;
+            width: 120px;
+            height: auto;
+            padding: 5px;
+            font: 12px sans-serif;
+            background: lightsteelblue;
+            border: 0px;
+            border-radius: 8px;
+            pointer-events: none;
+        }
+        .backButton {
+            display: block;
+            width: 200px;
+            margin: 20px auto;
+            text-align: center;
+            padding: 10px;
+            background-color: black;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .backButton:hover {
+            background-color: #555;
+        }
+        .chart-container {
+            position: relative;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        #year-dropdown {
+            position: absolute; 
+            top: 200px; 
+            left: 0%; 
+            transform: translateX(-90%); 
+            width: 200px; 
+        }
+    </style>
+</head>
+<body>
+    <!-- Heading Title -->
+    <div class="w3-black w3-center w3-padding-64">
+        <h2 class="w3-wide">FERTILITY RATE</h2>
+        <p class="w3-opacity"><i>These graphs show the fertility rate by year!</i></p>
+    </div>
+
+    <div class="chart-container">
+        <div id="chart"></div>
+        <select id="year-dropdown" class="w3-select w3-border">
+            <option value="2017" selected>2017</option>
+            <option value="2018">2018</option>
+            <option value="2019">2019</option>
+            <option value="2020">2020</option>
+            <option value="2021">2021</option>
+        </select>
+    </div>
+
+    <script>
+        const margin = { top: 10, right: 50, bottom: 80, left: 80 };
+        const width = 1000;
+        const height = 500;
+        const svg = d3.select("#chart")
+            .append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+            .append("g")
+            .attr("transform", `translate(${margin.left},${margin.top})`);
+
+        let xScale, yScale, colorScale;
+
+        // Tooltip
+        const tooltip = d3.select("body").append("div")
+            .attr("class", "tooltip")
+            .style("opacity", 0);
+
+        d3.csv("https://raw.githubusercontent.com/MinhTris1705/DSDV-Project-demo/main/datasets/Fertility_rate.csv").then(function(data) {
+            const initialYear = "2017";
+            const filteredData = data.filter(d => d.Year === initialYear);
+            createChart(filteredData);
+        });
+
+        d3.select("#year-dropdown")
+            .on("change", function() {
+                const selectedYear = d3.select(this).property("value");
+                updateChart(selectedYear);
+            });
+
+        function updateChart(selectedYear) {
+            d3.csv("https://raw.githubusercontent.com/MinhTris1705/DSDV-Project-demo/main/datasets/Fertility_rate.csv")
+                .then(function(data) {
+                    const filteredData = data.filter(d => d.Year === selectedYear);
+                    updateBars(filteredData);
+                });
+        }
+
+        function createChart(data) {
+            yScale = d3.scaleBand()
+                .domain(data.map(d => d.Entity))
+                .range([height - margin.bottom, margin.top])
+                .padding(0.1);
+
+            const maxFertilityRate = d3.max(data, d => parseFloat(d["Fertility rate - Sex: all - Age: all - Variant: estimates"]));
+            xScale = d3.scaleLinear()
+                .domain([0, maxFertilityRate])
+                .range([margin.left, width - margin.right]);
+
+            colorScale = d3.scaleOrdinal()
+                .domain(data.map(d => d.Entity))
+                .range(d3.schemeCategory10);
+
+            svg.selectAll("rect")
+                .data(data)
+                .enter()
+                .append("rect")
+                .attr("x", d => margin.left)
+                .attr("y", d => yScale(d.Entity))
+                .attr("width", d => xScale(parseFloat(d["Fertility rate - Sex: all - Age: all - Variant: estimates"])))
+                .attr("height", yScale.bandwidth())
+                .attr("fill", d => colorScale(d.Entity))
+                .on("mouseover", function(event, d) {
+                    tooltip.transition()
+                        .duration(200)
+                        .style("opacity", .9);
+                    tooltip.html("Country: " + d.Entity + "<br/>Fertility Rate: " + d["Fertility rate - Sex: all - Age: all - Variant: estimates"])
+                        .style("left", (event.pageX + 5) + "px")
+                        .style("top", (event.pageY - 28) + "px");
+                })
+                .on("mouseout", function(d) {
+                    tooltip.transition()
+                        .duration(500)
+                        .style("opacity", 0);
+                });
+
+            svg.append("g")
+                .attr("transform", `translate(${margin.left}, 0)`)
+                .call(d3.axisLeft(yScale));
+
+            svg.append("g")
+                .attr("transform", `translate(0, ${height - margin.bottom})`)
+                .call(d3.axisBottom(xScale));
+        }
+
+        function updateBars(data) {
+            const barSelection = svg.selectAll("rect")
+                .data(data);
+
+            barSelection.exit().remove();
+
+            barSelection.enter()
+                .append("rect")
+                .merge(barSelection)
+                .transition()
+                .duration(1000)
+                .attr("x", d => margin.left)
+                .attr("y", d => yScale(d.Entity))
+                .attr("width", d => xScale(parseFloat(d["Fertility rate - Sex: all - Age: all - Variant: estimates"])))
+                .attr("height", yScale.bandwidth())
+                .attr("fill", d => colorScale(d.Entity))
+                .on("mouseover", function(event, d) {
+                    tooltip.transition()
+                        .duration(200)
+                        .style("opacity", .9);
+                    tooltip.html("Country: " + d.Entity + "<br/>Fertility Rate: " + d["Fertility rate - Sex: all - Age: all - Variant: estimates"])
+                        .style("left", (event.pageX + 5) + "px")
+                        .style("top", (event.pageY - 28) + "px");
+                })
+                .on("mouseout", function(d) {
+                    tooltip.transition()
+                        .duration(500)
+                        .style("opacity", 0);
+                });
+        }
+    </script>
+
+    <!-- Back Button -->
+    <div class="w3-center w3-padding-32">
+        <a href="main.html" class="w3-button w3-black w3-margin-bottom">Return to Main</a>
+    </div>
+</body>
+</html>

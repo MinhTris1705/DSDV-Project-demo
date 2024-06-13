@@ -1,3 +1,5 @@
+(function(d3) {
+
 const margin = { top: 10, right: 50, bottom: 80, left: 80 };
 const width = 1000;
 const height = 500;
@@ -121,3 +123,4 @@ function updateBars(data) {
                 .style("opacity", 0);
         });
 }
+})(d3v7);

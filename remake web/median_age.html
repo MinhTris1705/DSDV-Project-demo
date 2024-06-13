@@ -1,3 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Project median age</title>
+    <body>
+    </body>
+    <style>
+        .safeLevel{
+            stroke: blue;
+            stroke-dasharray:3,5;
+        }
+
+        .avgLabel{
+            font-family:Arial, Helvetica, sans-serif;
+            font-size:14px;
+            font-weight:bold;
+            fill:blue
+        }
+    </style>
+</head>    
+</html>
+
+<meta charset="utf-8">
+<script src="https://d3js.org/d3.v4.js"></script>
+<div id="my_dataviz"></div>
+<script>
 document.addEventListener('DOMContentLoaded', () => {
     // Load and visualize the Median Age data
     fetch('https://raw.githubusercontent.com/MinhTris1705/DSDV-Project-demo/main/datasets/Median_age.csv')
@@ -7,7 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 width = 800 - margin.right,
                 height = 600;
 
-            var svg = d3.select("#median-age-graph")
+            var svg = d3.select("#my_dataviz")
                 .append("svg")
                 .attr("width", width + margin.left + margin.right+100)
                 .attr("height", height + margin.top + margin.bottom)
@@ -207,3 +233,5 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
         });
 });
+</script>
+<a href="main.html" class="w3-button w3-black w3-margin">Return to menu</a>
