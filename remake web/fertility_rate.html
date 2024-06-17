@@ -104,18 +104,20 @@
                 .then(function(data) {
                     const filteredData = data.filter(d => d.Year === selectedYear);
                     updateBars(filteredData);
+                    updateScales(filteredData);
                 });
         }
 
         function createChart(data) {
+            data.sort((a,b)=> b.Entity.localeCompare(a.Entity))
             yScale = d3.scaleBand()
                 .domain(data.map(d => d.Entity))
                 .range([height - margin.bottom, margin.top])
                 .padding(0.1);
 
-            const maxFertilityRate = d3.max(data, d => parseFloat(d["Fertility rate - Sex: all - Age: all - Variant: estimates"]));
+            //const maxFertilityRate = d3.max(data, d => parseFloat(d["Fertility rate - Sex: all - Age: all - Variant: estimates"]));
             xScale = d3.scaleLinear()
-                .domain([0, maxFertilityRate])
+                .domain([0, 4])
                 .range([margin.left, width - margin.right]);
 
             colorScale = d3.scaleOrdinal()
@@ -128,7 +130,7 @@
                 .append("rect")
                 .attr("x", d => margin.left)
                 .attr("y", d => yScale(d.Entity))
-                .attr("width", d => xScale(parseFloat(d["Fertility rate - Sex: all - Age: all - Variant: estimates"])))
+                .attr("width", d => xScale(parseFloat(d["Fertility rate - Sex: all - Age: all - Variant: estimates"]))-margin.left)
                 .attr("height", yScale.bandwidth())
                 .attr("fill", d => colorScale(d.Entity))
                 .on("mouseover", function(event, d) {
@@ -154,6 +156,14 @@
                 .call(d3.axisBottom(xScale));
         }
 
+        function updateScales(data) {
+            data.sort((a, b) => b.Entity.localeCompare(a.Entity));
+            const maxFertilityRate = d3.max(data, d => parseFloat(d["Fertility rate - Sex: all - Age: all - Variant: estimates"]));
+            xScale.domain([0, 4]);
+            yScale.domain(data.map(d => d.Entity));
+            xScale.range([margin.left, width - margin.right]);
+          }
+
         function updateBars(data) {
             const barSelection = svg.selectAll("rect")
                 .data(data);
@@ -167,7 +177,7 @@
                 .duration(1000)
                 .attr("x", d => margin.left)
                 .attr("y", d => yScale(d.Entity))
-                .attr("width", d => xScale(parseFloat(d["Fertility rate - Sex: all - Age: all - Variant: estimates"])))
+                .attr("width", d => xScale(parseFloat(d["Fertility rate - Sex: all - Age: all - Variant: estimates"]))-margin.left)
                 .attr("height", yScale.bandwidth())
                 .attr("fill", d => colorScale(d.Entity))
                 .on("mouseover", function(event, d) {
