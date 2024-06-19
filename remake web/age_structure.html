@@ -18,16 +18,17 @@
             border-radius: 8px;
             pointer-events: none;
         }
+
+        #year-value {
+            font-size: 18px;
+            margin-left: 10px;
+        }
     </style>
 </head>
 <body>
     <div>
-        <select id="year-select" onchange="updateChart(this.value)">
-            <option value="2017">2017</option>
-            <option value="2018">2018</option>
-            <option value="2019">2019</option>
-            <option value="2020">2020</option>
-            <option value="2021">2021</option>
+       <input type="range" id="year-slider" min="2017" max="2021" step="1" value="2017" onchange="updateChart(this.value)">
+        <span id="year-value">2017</span>
         </select>
     </div>
     <div id="stacked_bar"></div>
@@ -62,6 +63,7 @@
         }
 
         function updateChart(year) {
+            document.getElementById("year-value").innerText = year;
             d3.csv("https://raw.githubusercontent.com/MinhTris1705/DSDV-Project-demo/remake-website/datasets/Age_structure.csv").then(data => {
                 const filteredData = data.filter(d => d.Year === year);
                 const formattedData = filteredData.map(d => ({
