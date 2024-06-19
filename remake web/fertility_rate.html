@@ -87,7 +87,7 @@
             .attr("class", "tooltip")
             .style("opacity", 0);
 
-        d3.csv("https://raw.githubusercontent.com/MinhTris1705/DSDV-Project-demo/main/datasets/Fertility_rate.csv").then(function(data) {
+        d3.csv("https://raw.githubusercontent.com/MinhTris1705/DSDV-Project-demo/remake-website/datasets/Fertility_rate.csv").then(function(data) {
             const initialYear = "2017";
             const filteredData = data.filter(d => d.Year === initialYear);
             createChart(filteredData);
@@ -100,7 +100,7 @@
             });
 
         function updateChart(selectedYear) {
-            d3.csv("https://raw.githubusercontent.com/MinhTris1705/DSDV-Project-demo/main/datasets/Fertility_rate.csv")
+            d3.csv("https://raw.githubusercontent.com/MinhTris1705/DSDV-Project-demo/remake-website/datasets/Fertility_rate.csv")
                 .then(function(data) {
                     const filteredData = data.filter(d => d.Year === selectedYear);
                     updateBars(filteredData);

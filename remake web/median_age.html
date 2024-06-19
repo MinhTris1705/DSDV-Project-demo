@@ -66,7 +66,7 @@
             };
 
             // Load and parse data
-            fetch('https://raw.githubusercontent.com/MinhTris1705/DSDV-Project-demo/main/datasets/Median_age.csv')
+            fetch('https://raw.githubusercontent.com/MinhTris1705/DSDV-Project-demo/remake-website/datasets/Median_age.csv')
                 .then(response => response.text())
                 .then(data => {
                     var dataParsed = d3.csvParse(data, rowConverter);

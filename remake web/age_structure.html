@@ -62,7 +62,7 @@
         }
 
         function updateChart(year) {
-            d3.csv("https://raw.githubusercontent.com/MinhTris1705/DSDV-Project-demo/main/datasets/Age_structure.csv").then(data => {
+            d3.csv("https://raw.githubusercontent.com/MinhTris1705/DSDV-Project-demo/remake-website/datasets/Age_structure.csv").then(data => {
                 const filteredData = data.filter(d => d.Year === year);
                 const formattedData = filteredData.map(d => ({
                     country: d['Country name'],
