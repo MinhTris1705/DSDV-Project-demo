@@ -37,7 +37,7 @@
         }
         
         #year-slider {
-            margin-right: 10px;
+              margin-right: 10px;
         }
     </style>
 </head>
@@ -51,10 +51,9 @@
     <div class="chart-container">
         <div id="chart"></div>
         <div id="year-slider-container">
-          <span id="year-value">2017</span>
-          <input type="range" id="year-slider" min="2017" max="2021" step="1" value="2017">
-        </div>
-      
+            <span id="year-value">2017</span>
+            <input type="range" id="year-slider" min="2017" max="2021" step="1" value="2017">
+          </div>
     </div>
 
     <script>
@@ -126,7 +125,7 @@
                     tooltip.transition()
                         .duration(200)
                         .style("opacity", .9);
-                    tooltip.html("Country: " + d.Entity + "<br/>Fertility Rate: " + d["Fertility rate - Sex: all - Age: all - Variant: estimates"])
+                        tooltip.html("Country: " + d.Entity + "<br/>Fertility Rate: " + parseFloat(d["Fertility rate - Sex: all - Age: all - Variant: estimates"]).toFixed(2))
                         .style("left", (event.pageX + 5) + "px")
                         .style("top", (event.pageY - 28) + "px");
                 })
