@@ -7,9 +7,6 @@
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <script src="https://d3js.org/d3.v6.min.js"></script>
     <style>
-        body {
-            font-family: "Lato", sans-serif;
-        }
         .tooltip {
             position: absolute;
             text-align: center;
@@ -22,32 +19,10 @@
             border-radius: 8px;
             pointer-events: none;
         }
-        .backButton {
-            display: block;
-            width: 200px;
-            margin: 20px auto;
-            text-align: center;
-            padding: 10px;
-            background-color: black;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-        }
-        .backButton:hover {
-            background-color: #555;
-        }
-        .chart-container {
-            position: relative;
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        #year-select {
-            position: absolute;
-            top: 200px;
-            left: 0%;
-            transform: translateX(-90%);
-            width: 150px;
+       
+        #year-value {
+            font-size: 18px;
+            margin-left: 10px;
         }
     </style>
 </head>
@@ -58,17 +33,12 @@
         <p class="w3-opacity"><i>The graph shows the age structure in 100% per year!</i></p>
     </div>
 
-    <div class="chart-container">
-        <div id="stacked_bar"></div>
-        <select id="year-select" class="w3-select w3-border" onchange="updateChart(this.value)">
-            <option value="2017" selected>2017</option>
-            <option value="2018">2018</option>
-            <option value="2019">2019</option>
-            <option value="2020">2020</option>
-            <option value="2021">2021</option>
-        </select>
-    </div>
-
+    <div>
+        <input type="range" id="year-slider" min="2017" max="2021" step="1" value="2017" onchange="updateChart(this.value)">
+        <span id="year-value">2017</span>
+         </select>
+     </div>
+     <div id="stacked_bar"></div>
     <script>
         let svg, x, y, color, stack, keys, width, height, margin, tooltip;
 
@@ -100,6 +70,7 @@
         }
 
         function updateChart(year) {
+            document.getElementById("year-value").innerText = year;
             d3.csv("https://raw.githubusercontent.com/MinhTris1705/DSDV-Project-demo/remake-website/datasets/Age_structure.csv").then(data => {
                 const filteredData = data.filter(d => d.Year === year);
                 const formattedData = filteredData.map(d => ({
