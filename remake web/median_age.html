@@ -126,7 +126,7 @@
                         .attr("fill", "none")
                         .attr("class", d => "line " + d.key)
                         .attr("stroke", d => color(d.key))
-                        .attr("stroke-width", 1.5)
+                        .attr("stroke-width", 2)
                         .attr("d", d => d3.line()
                             .x(d => x(d.Year))
                             .y(d => y(d.Median_age))
@@ -186,14 +186,10 @@
                         .attr("class", "safeLevel")
                         .attr("x1", 0)
                         .attr("x2", width)
-                        .attr("y1", y(29.5))
-                        .attr("y2", y(29.5));
+                        .attr("y1", y(30))
+                        .attr("y2", y(30));
 
-                    svg.append("text")
-                        .attr("class", "avgLabel")
-                        .attr("x", -30)
-                        .attr("y", y(29.5) + 5)
-                        .text("29.5");
+                    
 
                     // Mouse over effects
                     var mouseG = svg.append("g")
